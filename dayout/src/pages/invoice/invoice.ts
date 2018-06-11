@@ -19,11 +19,6 @@ export class InvoicePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private emailComposer: EmailComposer, private file: File) {
     // If we navigated to this page, we will have an item available as a nav param
-    this.mileage = '16km';
-    this.items = [];
-    this.items.push({
-      title: '16km',
-    });
   }
 
   takePicture(){
@@ -71,13 +66,6 @@ export class InvoicePage {
       buttons: ['OK']
     });
     alert.present();  
-  }
-
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ListPage, {
-      item: item
-    });
   }
 
   sendEmail(){

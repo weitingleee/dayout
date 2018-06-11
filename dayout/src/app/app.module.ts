@@ -9,6 +9,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { InvoicePage } from '../pages/invoice/invoice';
+import { TransportOverviewPage } from '../pages/transportoverview/transportoverview';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,6 +22,7 @@ import {File} from '@ionic-native/file';
     HomePage,
     ListPage,
     InvoicePage,
+    TransportOverviewPage
   ],
   imports: [
     BrowserModule,
@@ -33,6 +35,7 @@ import {File} from '@ionic-native/file';
     HomePage,
     ListPage,
     InvoicePage,
+    TransportOverviewPage
   ],
   providers: [
     StatusBar,

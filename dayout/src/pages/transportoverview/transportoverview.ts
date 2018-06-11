@@ -7,14 +7,13 @@ import { EmailComposer } from '@ionic-native/email-composer';
 import { File } from '@ionic-native/file';
 import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { TransportOverviewPage } from '../transportoverview/transportoverview';
 
 @Component({
-  selector: 'page-list',
-  templateUrl: 'list.html'
+  selector: 'page-transportoverview',
+  templateUrl: 'transportoverview.html'
 })
 
-export class ListPage {
+export class TransportOverviewPage {
   icons: string[];
   items: Array<{title: string}>;
   private image: string; 
@@ -105,8 +104,7 @@ export class ListPage {
       buttons: ['OK']
     });
     alert.present();     
-   
-    this.navCtrl.setRoot(TransportOverviewPage);
+
   }
 
   generateDistance(){
