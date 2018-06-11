@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Invoice</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-list>      
+      <ion-item>      
+        <ion-label color="primary" floating><ion-icon name="md-calendar"></ion-icon>     Date</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" [(ngModel)]="myDate"></ion-datetime>
+      </ion-item>
+
+      <ion-fab top right>
+        <ion-label color="primary">Upload Invoice</ion-label>
+        <button ion-fab color="primary" (click)="takePicture()">
+            <ion-icon name="md-attach"></ion-icon>
+        </button>
+      </ion-fab>      
+  
+      <ion-item>      
+        <ion-label color="primary"><ion-icon name="md-clipboard"></ion-icon>     Description</ion-label>
+        <ion-textarea></ion-textarea>
+      </ion-item>
+      
+      </ion-list>
+  
+      <button ion-button block (click)="submitTransport()">Submit</button></ion-content>

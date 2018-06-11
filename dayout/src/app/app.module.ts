@@ -8,6 +8,7 @@ import { HttpModule } from '@angular/http'
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { InvoicePage } from '../pages/invoice/invoice';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -18,7 +19,8 @@ import {File} from '@ionic-native/file';
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    InvoicePage,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,8 @@ import {File} from '@ionic-native/file';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    InvoicePage,
   ],
   providers: [
     StatusBar,
