@@ -1,6 +1,6 @@
 {
   "name": "dayout",
-  "app_id": "",
+  "app_id": "56e9971a",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
