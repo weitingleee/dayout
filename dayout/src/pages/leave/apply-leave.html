@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Apply Leave</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-item>      
+    <ion-label color="primary" floating><ion-icon name="md-calendar"></ion-icon>     Date</ion-label>
+    <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" [(ngModel)]="myDate"></ion-datetime>
+  </ion-item>
+  
+  <ion-item>     
+    <ion-label color="primary" floating><ion-icon name="md-time"></ion-icon>     Start Time</ion-label>
+    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="timeStarts"></ion-datetime>
+  </ion-item>
+  
