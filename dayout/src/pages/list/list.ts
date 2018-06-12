@@ -93,8 +93,8 @@ export class ListPage {
 
   sendEmail(){
     //this.file.createFile(this.file.dataDirectory, 'transport.csv', true)
-    this.file.checkDir(this.file.externalDataDirectory, 'dayout').then(_ 
-      =>console.log('Directory exists')).catch(      
+    this.file.checkDir(this.file.externalDataDirectory, 'dayout').then(
+      _ =>console.log('Directory exists')).catch(      
       err =>{
         console.log('Directory doesn\'t exist');
         this.file.createDir(this.file.externalDataDirectory, 'dayout', false);
@@ -211,7 +211,7 @@ export class ListPage {
     content: 'Syncing from Dropbox...'
   });
  
-  loading.present(=);
+  loading.present();
  
   this.dropbox.goBackFolder().subscribe(data => {
     this.folders = data.entries;
