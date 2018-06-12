@@ -8,11 +8,11 @@ import { HttpModule } from '@angular/http'
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-import { InvoicePage } from '../pages/invoice/invoice';
-import { TransportOverviewPage } from '../pages/transportoverview/transportoverview';
-
+import { ApplyLeave } from '../pages/leave/apply-leave';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { InvoicePage } from '../pages/invoice/invoice';
+import { TransportOverviewPage } from '../pages/transportoverview/transportoverview';
 import { EmailComposer } from '@ionic-native/email-composer';
 import {File} from '@ionic-native/file';
 import { Dropbox } from '../providers/dropbox/dropbox';
@@ -25,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
     MyApp,
     HomePage,
     ListPage,
+    ApplyLeave,
     InvoicePage,
     TransportOverviewPage
   ],
@@ -39,6 +40,7 @@ import { HttpClientModule } from '@angular/common/http';
     MyApp,
     HomePage,
     ListPage,
+    ApplyLeave,
     InvoicePage,
     TransportOverviewPage,
   ],

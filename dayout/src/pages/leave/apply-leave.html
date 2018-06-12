@@ -70,7 +70,7 @@
       <ion-label color="primary">
 
         <ion-icon name="md-paper"></ion-icon> Leave Type</ion-label>
-      <ion-select [(ngModel)]="leaveType" (ionChange)="changeLeave()">
+      <ion-select [(ngModel)]="leaveType"(ionChange)="changeLeave()">
         <ion-option value="medicalLeave">Medical Leave</ion-option>
         <ion-option value="childCare">Child Care</ion-option>
         <ion-option value="parentCare">Parent Care</ion-option>
@@ -85,23 +85,13 @@
     <ion-item *ngIf="visibility">
       <ion-label>Mode of Transport</ion-label>
       <ion-select [(ngModel)]="transportModel">
-        <ion-option value="car">Car</ion-option>
-        <ion-option value="plane">Plane</ion-option>
-        <ion-option value="boat">Boat</ion-option>
-        <ion-option value="bus">Bus</ion-option>
-      </ion-select>
+          <ion-option value="car">Car</ion-option>
+          <ion-option value="plane">Plane</ion-option>
+          <ion-option value="boat">Boat</ion-option>
+          <ion-option value="bus">Bus</ion-option>
+        </ion-select>
     </ion-item>
-    <ion-item *ngIf="visibility">
-      <ion-label>Mode of Transport</ion-label>
-      <ion-select [(ngModel)]="transportModel">
-        <ion-option value="car">Car</ion-option>
-        <ion-option value="plane">Plane</ion-option>
-        <ion-option value="boat">Boat</ion-option>
-        <ion-option value="bus">Bus</ion-option>
-      </ion-select>
 
-
-    </ion-item>
 
 
     <ion-row>
