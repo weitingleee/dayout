@@ -26,8 +26,8 @@ setAccessToken(token) {
     headers.append('Authorization', 'Bearer ' + this.accessToken);
     headers.append('Content-Type', 'application/json');
   
-    return this.http.post('https://api.dropboxapi.com/2-beta-2/users/get_current_account', "null", {headers: headers})
-      .map(res => res.json()); 
+   // return this.http.post('https://api.dropboxapi.com/2-beta-2/users/get_current_account', "null", {headers: headers})
+     // .map(res => res.json()); 
   }
  
   getFolders(path?){
@@ -57,8 +57,8 @@ setAccessToken(token) {
  
   }
  
-  return this.http.post('https://api.dropboxapi.com/2-beta-2/files/list_folder', JSON.stringify(folderPath), {headers: headers})
-    .map(res => res.json()); 
+ // return this.http.post('https://api.dropboxapi.com/2-beta-2/files/list_folder', JSON.stringify(folderPath), {headers: headers})
+    //.map(res => res.json()); 
   }
  
   goBackFolder(){

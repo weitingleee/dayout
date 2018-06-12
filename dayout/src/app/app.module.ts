@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
-import { Base64ToGallery } from '@ionic-native/base64-to-gallery'; 
+import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
 import { HttpModule } from '@angular/http'
 
 import { MyApp } from './app.component';
@@ -14,12 +14,25 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { InvoicePage } from '../pages/invoice/invoice';
 import { TransportOverviewPage } from '../pages/transportoverview/transportoverview';
 import { EmailComposer } from '@ionic-native/email-composer';
-import {File} from '@ionic-native/file';
+import { File } from '@ionic-native/file';
 import { Dropbox } from '../providers/dropbox/dropbox';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
+import { DataProvider } from '../providers/data/data';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { MyFilesPage } from '../pages/my-files/my-files';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
-
+var firebaseConfig = {
+  apiKey: "AIzaSyBl7eQs9iH4hYjRX6mWC-6y8T8zspnjGh0",
+  authDomain: "sonic-glazing-206502.firebaseapp.com",
+  databaseURL: "https://sonic-glazing-206502.firebaseio.com",
+  projectId: "sonic-glazing-206502",
+  storageBucket: "sonic-glazing-206502.appspot.com",
+  messagingSenderId: "870662456368"
+};
 @NgModule({
   declarations: [
     MyApp,
@@ -27,13 +40,18 @@ import { HttpClientModule } from '@angular/common/http';
     ListPage,
     ApplyLeave,
     InvoicePage,
-    TransportOverviewPage
+    TransportOverviewPage,
+    MyFilesPage,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireStorageModule
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -43,6 +61,7 @@ import { HttpClientModule } from '@angular/common/http';
     ApplyLeave,
     InvoicePage,
     TransportOverviewPage,
+    MyFilesPage,
   ],
   providers: [
     StatusBar,
@@ -52,9 +71,11 @@ import { HttpClientModule } from '@angular/common/http';
     File,
     EmailComposer,
     HttpModule,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     Dropbox,
-    HttpClient
+    HttpClient,
+    DataProvider,
+    InAppBrowser
   ]
 })
-export class AppModule {}
+export class AppModule { }

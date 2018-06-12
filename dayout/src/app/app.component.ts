@@ -8,7 +8,8 @@ import { ListPage } from '../pages/list/list';
 import { ApplyLeave } from '../pages/leave/apply-leave';
 import { InvoicePage } from '../pages/invoice/invoice';
 import { TransportOverviewPage } from '../pages/transportoverview/transportoverview';
-
+import { MyFilesPage } from '../pages/my-files/my-files';
+import {InAppBrowser} from '@ionic-native/in-app-browser';
 @Component({
   templateUrl: 'app.html'
 })
@@ -31,6 +32,7 @@ export class MyApp {
       { title: 'Transport', component: ListPage },
       { title: 'Invoice', component: InvoicePage },
       { title: 'Transport Overview', component: TransportOverviewPage },
+      { title: 'My Files', component: MyFilesPage },
     ];
 
   }
