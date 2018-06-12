@@ -44,23 +44,23 @@
                     </ion-content>                        
                     </ion-col>
                 
-                    <ion-col>     
+                    <ion-col *ngIf="mode == 'Car'">     
                         <ion-content padding>
-                        <label>Mileage: {{distance}}</label>
+                        <label *ngIf="mode == 'Car'">Mileage: {{distance}}</label>
                         </ion-content>
                     </ion-col>
             </ion-row>
   
-            <ion-row>
+            <ion-row *ngIf="mode == 'Car'">
                     <ion-col>     
                     <ion-content padding>
-                        <label>Parking: {{parking}}</label>
+                        <label *ngIf="mode == 'Car'">Parking: {{parking}}</label>
                     </ion-content>                        
                     </ion-col>
                 
                     <ion-col>     
                         <ion-content padding>
-                        <label>ERP: {{erp}}</label>
+                        <label *ngIf="mode == 'Car'">ERP: {{erp}}</label>
                         </ion-content>
                     </ion-col>
             </ion-row>            
