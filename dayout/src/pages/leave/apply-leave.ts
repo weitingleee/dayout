@@ -14,6 +14,9 @@ export class ApplyLeave {
   modeTo: any;
   leaveType: any;
   posts: any;
+  overseas: boolean = false;
+  visibility: boolean = false;
+
   text = {
     "number": "",
     "message": "",
@@ -23,6 +26,7 @@ export class ApplyLeave {
     this.modeFrom = 'Full';
     this.modeTo = 'Full';
     this.leaveType = 'Please select one';
+
   }
   submitLeave() {
     console.log(this.fromDate);
@@ -41,9 +45,9 @@ export class ApplyLeave {
     }
     if (!check) {
       var days = 0;
-      if (this.modeFrom === 'AM' && this.modeTo==='PM' && this.toDate!==undefined) {
-        this.showConfirm("Confirmation", "Are you coming back to the office in the afternoon on " + this.fromDate + " and in the morning on " + this.toDate+"?" );
-      }else if (this.modeFrom === 'AM' && this.toDate !== undefined) {
+      if (this.modeFrom === 'AM' && this.modeTo === 'PM' && this.toDate !== undefined) {
+        this.showConfirm("Confirmation", "Are you coming back to the office in the afternoon on " + this.fromDate + " and in the morning on " + this.toDate + "?");
+      } else if (this.modeFrom === 'AM' && this.toDate !== undefined) {
         this.showConfirm("Confirmation", "Are you coming back to the office in the afternoon on " + this.fromDate + "?");
       } else if (this.modeTo === 'PM') {
         this.showConfirm("Confirmation", "Are you coming back to the office in the morning on " + this.toDate + "?");
@@ -71,6 +75,7 @@ export class ApplyLeave {
           checkDate = new Date(this.fromDate);
           for (let i = 0; i < totalDays; i++) {
             for (let j = 0; j < publicHoliday.length; j++) {
+              console.log(publicHoliday[j].getTime() + " " + checkDate.getTime())
               if (publicHoliday[j].getTime() == checkDate.getTime()) {
                 if (publicHoliday[j].getDay() !== 0 || publicHoliday[j].getDay() !== 6) {
                   days = days - 1;
@@ -125,6 +130,12 @@ export class ApplyLeave {
     alert.present();
   }
 
+  changeLeave(){
+    if(this.leaveType!=='annual'){
+      this.overseas=false;
+      this.visibility=false;
+    }
+  }
   showConfirm(main, message) {
     const confirm = this.alertCtrl.create({
       title: main,
@@ -145,5 +156,13 @@ export class ApplyLeave {
       ]
     });
     confirm.present();
+  }
+
+  showDOT() {
+    if (!this.overseas) {
+      this.visibility = false;
+    } else {
+      this.visibility = true;
+    }
   }
 }
