@@ -3,79 +3,26 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Claim Transport</ion-title>
+    <ion-title>Apply Leave</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>      
-    <ion-item>      
-      <ion-label color="primary" floating><ion-icon name="md-calendar"></ion-icon>     Date</ion-label>
-      <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" [(ngModel)]="myDate"></ion-datetime>
-    </ion-item>
-    
-    <ion-item>     
-      <ion-label color="primary" floating><ion-icon name="md-time"></ion-icon>     Start Time</ion-label>
-      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="timeStarts"></ion-datetime>
-    </ion-item>
-    
-    <ion-item>      
-      <ion-label color="primary" floating><ion-icon name="md-pin"></ion-icon>     From</ion-label>
-      <ion-input [(ngModel)]="start"></ion-input>
-    </ion-item>
-    
-    <ion-item>      
-      <ion-label color="primary" floating><ion-icon name="md-pin"></ion-icon>     To</ion-label>
-      <ion-input [(ngModel)]="end"></ion-input>
-    </ion-item>
-    
-    <ion-item>      
-      <ion-label color="primary"><ion-icon name="md-car"></ion-icon>     Mode of Transport</ion-label>
-      <ion-select [(ngModel)]="mode">
-        <ion-option *ngFor="let ut of modeList" [value]="ut.value" [innerHTML]="ut.label"></ion-option>
-        <ion-option value="Taxi">Taxi</ion-option>
-        <ion-option value="Car">Car</ion-option>
-      </ion-select>
-    </ion-item>
-    
-    <ion-item *ngIf="mode == 'Car'">
-        <ion-label><ion-icon name="md-speedometer"></ion-icon>     Calculate Mileage</ion-label>
-        <ion-checkbox [(ngModel)]="mileage" (ionChange)="callDistMatrix()"></ion-checkbox>
-        <div *ngIf="mileage" padding>Mileage:<b>{{mileage.title}}</b> </div>
-    </ion-item>
-    
-    <!--<ion-item *ngFor="let mlg = mileage">
-        <ion-label>{{mlg}}</ion-label>
-    </ion-item>-->
+<ion-content padding>
+    <button ion-button (click)="sendSMS()">Send SMS</button>
 
-    <ion-item *ngIf="mode == 'Car'">
-      <ion-label color="primary" floating><ion-icon name="md-stats"></ion-icon>     Parking</ion-label>
-      <ion-input></ion-input>
+    <ion-item>
+      <ion-label color="primary" floating>Starting Location</ion-label>
+      <ion-input [(ngModel)]="start"> </ion-input>
     </ion-item>
     
-    <ion-item *ngIf="mode == 'Car'">
-      <ion-label color="primary" floating><ion-icon name="md-stats"></ion-icon>     ERP</ion-label>
-      <ion-input></ion-input>
+    <ion-item>
+      <ion-label color="primary" floating>Destination</ion-label>
+      <ion-input  [(ngModel)]="destination"></ion-input>
     </ion-item>
     
-    <ion-item>      
-      <ion-label color="primary" floating><ion-icon name="md-cash"></ion-icon>     Amount ($) </ion-label>
-      <ion-input></ion-input>
-    </ion-item>
+    <button ion-button full (click)="generateDistance()" color="secondary">Generate distance</button>
     
-    <ion-item>      
-      <ion-label color="primary"><ion-icon name="md-briefcase"></ion-icon>     Purpose</ion-label>
-      <ion-textarea></ion-textarea>
-    </ion-item>
-    
-    </ion-list>
-
-    <ion-fab right bottom>
-      <button ion-fab color="primary" (click)="takePicture()">
-          <ion-icon name="md-camera"></ion-icon>
-      </button>
-    </ion-fab>
-
-    <button ion-button round (click)="submitTransport()">Submit</button>
-
-</ion-content>
+    <ion-item>
+      <ion-label color="primary" floating>Distance</ion-label>
+      <ion-input [readonly]="true" color="primary"  [(ngModel)]="distance" floating></ion-input>
+    </ion-item></ion-content>

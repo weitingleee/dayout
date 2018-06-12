@@ -7,14 +7,13 @@ import { EmailComposer } from '@ionic-native/email-composer';
 import { File } from '@ionic-native/file';
 import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { TransportOverviewPage } from '../transportoverview/transportoverview';
 
 @Component({
-  selector: 'page-list',
-  templateUrl: 'list.html'
+  selector: 'page-transportoverview',
+  templateUrl: 'transportoverview.html'
 })
 
-export class ListPage {
+export class TransportOverviewPage {
   icons: string[];
   items: Array<{title: string}>;
   private image: string; 
@@ -25,14 +24,23 @@ export class ListPage {
   posts: any;
   myDate: any; 
   timeStarts: any;
-  mode: any; 
   parking: any;
-  erp: any;
-  amount: any;
+  erp: any; 
+  amount: any; 
   purpose: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private emailComposer: EmailComposer, private file: File, public http: Http,) {
     // If we navigated to this page, we will have an item available as a nav param
+    this.myDate = navParams.get('date');
+    this.timeStarts = navParams.get('time');
+    this.start = navParams.get('from');
+    this.destination = navParams.get('to');      
+    this.mode = navParams.get('tptmode');    
+    this.distance = navParams.get('mileage'); 
+    this.parking = navParams.get('parking'); 
+    this.erp = navParams.get('erp');   
+    this.amount = navParams.get('amount'); 
+    this.purpose = navParams.get('purpose'); 
   }
 
   takePicture(){
@@ -110,24 +118,7 @@ export class ListPage {
       buttons: ['OK']
     });
     alert.present();     
-   
-  if(this.destination == "undefined"){this.destination = "";}
-  if(this.destination_txt == "undefined"){this.destination_txt = "";}
-  if(this.start == "undefined"){this.start = "";}
-  if(this.start_txt == "undefined"){this.start_txt = "";}
 
-    this.navCtrl.push(TransportOverviewPage, {
-      date: this.myDate,
-      time: this.timeStarts,
-      from: this.start_txt + " " + this.start,
-      to: this.destination_txt + " " + this.destination,
-      tptmode: this.mode,
-      mileage: this.distance,
-      parking: this.parking,
-      erp: this.erp,
-      amount: this.amount,
-      purpose: this.purpose,
-    });
   }
 
   generateDistance(){

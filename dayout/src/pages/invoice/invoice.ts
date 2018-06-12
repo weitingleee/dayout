@@ -3,35 +3,21 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, CameraPreviewDimensions } from '@ionic-native/camera-preview';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery'; 
-import { EmailComposer } from '@ionic-native/email-composer';
-import { File } from '@ionic-native/file';
-import { Http, URLSearchParams } from '@angular/http';
-import 'rxjs/add/operator/map';
-import { TransportOverviewPage } from '../transportoverview/transportoverview';
+import {EmailComposer} from '@ionic-native/email-composer';
+import {File} from '@ionic-native/file';
 
 @Component({
-  selector: 'page-list',
-  templateUrl: 'list.html'
+  selector: 'page-invoice',
+  templateUrl: 'invoice.html'
 })
 
-export class ListPage {
+export class InvoicePage {
+  mileage: any;
   icons: string[];
   items: Array<{title: string}>;
   private image: string; 
-  start: any;
-  destination: any;
-  distance: any;
-  generate: boolean;
-  posts: any;
-  myDate: any; 
-  timeStarts: any;
-  mode: any; 
-  parking: any;
-  erp: any;
-  amount: any;
-  purpose: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private emailComposer: EmailComposer, private file: File, public http: Http,) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private emailComposer: EmailComposer, private file: File) {
     // If we navigated to this page, we will have an item available as a nav param
   }
 
@@ -84,14 +70,7 @@ export class ListPage {
 
   sendEmail(){
     //this.file.createFile(this.file.dataDirectory, 'transport.csv', true)
-    this.file.checkDir(this.file.dataDirectory, 'dayout').then(
-      _ =>console.log('Directory exists')).catch(      
-      err =>{
-        console.log('Directory doesn\'t exist');
-        file.createDir(file.applicationDirectory, 'dayout', false);
-      });
-
-    this.file.createFile(this.file.externalRootDirectory+'/dayout/', 'transport'+this.start+this.destination+this.myDate+this.timeStarts+'.png', true).then(
+    this.file.createFile(this.file.externalRootDirectory, 'transport.docx', true).then(
       res => {
         console.log('Saved image to gallery', res);
         this.displaySuccessAlert(res);
@@ -110,55 +89,9 @@ export class ListPage {
       buttons: ['OK']
     });
     alert.present();     
-   
-  if(this.destination == "undefined"){this.destination = "";}
-  if(this.destination_txt == "undefined"){this.destination_txt = "";}
-  if(this.start == "undefined"){this.start = "";}
-  if(this.start_txt == "undefined"){this.start_txt = "";}
-
-    this.navCtrl.push(TransportOverviewPage, {
-      date: this.myDate,
-      time: this.timeStarts,
-      from: this.start_txt + " " + this.start,
-      to: this.destination_txt + " " + this.destination,
-      tptmode: this.mode,
-      mileage: this.distance,
-      parking: this.parking,
-      erp: this.erp,
-      amount: this.amount,
-      purpose: this.purpose,
-    });
+   //GO TO OVERVIEW PAGE 
   }
-
-  generateDistance(){
-    this.posts = null;
-
-    this.http.get('https://maps.googleapis.com/maps/api/distancematrix/json?units=km&origins=' + this.start + '&destinations=' + this.destination + '&key=AIzaSyBVXQmKg9DsI69_Vm_cnbhLWzXI8jG2SSA').map(res => res.json()).subscribe(data => {
-     
-    if (data.rows[0].elements[0].status !==("NOT_FOUND") && this.start!==(undefined) && this.destination!==(undefined)) {
-
-        this.posts = data.rows[0].elements[0].distance.text;
-        console.log(this.posts);
-
-        this.distance = this.posts;
-      }else{
-        this.showAlert();
-      }
-    })
-
-  }
-
-    showAlert() {
-      let alert = this.alertCtrl.create({
-        title: 'Please check your location',
-        subTitle: 'Location not found',
-        buttons: ['OK'],
-        cssClass: 'alertCustomCss'
-      });
-      alert.present();
-    }    
-  }
-
+}
 
 
 /*
