@@ -15,6 +15,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { EmailComposer } from '@ionic-native/email-composer';
 import {File} from '@ionic-native/file';
+import { Dropbox } from '../providers/dropbox/dropbox';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -28,6 +32,7 @@ import {File} from '@ionic-native/file';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
+    HttpClientModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -35,7 +40,7 @@ import {File} from '@ionic-native/file';
     HomePage,
     ListPage,
     InvoicePage,
-    TransportOverviewPage
+    TransportOverviewPage,
   ],
   providers: [
     StatusBar,
@@ -45,7 +50,9 @@ import {File} from '@ionic-native/file';
     File,
     EmailComposer,
     HttpModule,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Dropbox,
+    HttpClient
   ]
 })
 export class AppModule {}

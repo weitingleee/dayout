@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, CameraPreviewDimensions } from '@ionic-native/camera-preview';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery'; 
@@ -8,6 +8,8 @@ import { File } from '@ionic-native/file';
 import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { TransportOverviewPage } from '../transportoverview/transportoverview';
+import * as Papa from 'papaparse';
+import { Dropbox } from '../../providers/dropbox/dropbox';
 
 @Component({
   selector: 'page-list',
@@ -33,8 +35,13 @@ export class ListPage {
   amount: any;
   purpose: any;
   userId: any;
+  
+  accessToken: any;
+  folderHistory: any = [];
+  depth: number = 0;
+  folders: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private emailComposer: EmailComposer, private file: File, public http: Http,) {
+  constructor(public loadingCtrl: LoadingController, public dropbox: Dropbox,public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private emailComposer: EmailComposer, private file: File, public http: Http,) {
     // If we navigated to this page, we will have an item available as a nav param
   }
 
@@ -87,14 +94,14 @@ export class ListPage {
 
   sendEmail(){
     //this.file.createFile(this.file.dataDirectory, 'transport.csv', true)
-    this.file.checkDir(this.file.dataDirectory, 'dayout').then(
+    this.file.checkDir(this.file.externalDataDirectory, 'dayout').then(
       _ =>console.log('Directory exists')).catch(      
       err =>{
         console.log('Directory doesn\'t exist');
-        file.createDir(file.applicationDirectory, 'dayout', false);
+        file.createDir(file.externalDataDirectory, 'dayout', false);
       });
 
-    this.file.createFile(this.file.externalRootDirectory+'/dayout/', 'transport'+this.start+this.destination+this.myDate+this.timeStarts+'.png', true).then(
+    this.file.createFile(this.file.externalDataDirectory+'/dayout/', 'transport'+this.start+this.destination+this.myDate+this.timeStarts+'.png', true).then(
       res => {
         console.log('Saved image to gallery', res);
         this.displaySuccessAlert(res);
@@ -162,10 +169,75 @@ export class ListPage {
       });
       alert.present();
     }    
+//https://www.papaparse.com/docs
+    sendtest(){
+      var csv = Papa.unparse([
+        {
+          "Column 1": "foo",
+          "Column 2": "bar"
+        },
+        {
+          "Column 1": "abc",
+          "Column 2": "def"
+        }
+      ]);
+
+console.log(csv);
+    }
+
+  ionViewDidLoad(){
+ 
+      this.dropbox.setAccessToken("NlVs3GJxtfAAAAAAAAAABgihVOivOGc_A91BfkYObWZzG9n99f_yZ7E9H4dqHh-W");
+      this.folders = [];
+ 
+      let loading = this.loadingCtrl.create({
+        content: 'Syncing from Dropbox...'
+      });
+ 
+      loading.present();
+ 
+      this.dropbox.getFolders().subscribe(data => {
+        this.folders = data.entries;
+        loading.dismiss();
+      }, (err) => {
+        console.log(err);
+      });
+ 
   }
-
-  
-
+ 
+  openFolder(path){
+   let loading = Loading.create({
+    content: 'Syncing from Dropbox...'
+  });
+ 
+  this.nav.present(loading);
+ 
+  this.dropbox.getFolders(path).subscribe(data => {
+    this.folders = data.entries;
+    this.depth++;
+    loading.dismiss();
+  }, err => {
+    console.log(err);
+  });
+  }
+ 
+  goBack(){
+   let loading = Loading.create({
+    content: 'Syncing from Dropbox...'
+  });
+ 
+  this.nav.present(loading);
+ 
+  this.dropbox.goBackFolder().subscribe(data => {
+    this.folders = data.entries;
+    this.depth--;
+    loading.dismiss();
+  }, err => {
+    console.log(err);
+  });
+  }
+ 
+  }
 /*
 .then(() => {      
       let email = {

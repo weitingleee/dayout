@@ -110,4 +110,20 @@
       </button>
     </ion-fab>
 
+    <button color='primary' ion-button block (click)="sendtest()">Email</button>
     <button color='dayout' ion-button block (click)="submitTransport()">Submit</button></ion-content>
+    
+    <ion-buttons start>
+        <button ion-button *ngIf="depth" (click)="goBack()"><ion-icon name="arrow-back"></ion-icon> Back</button>
+      </ion-buttons>
+
+      <ion-list>
+          <div *ngFor="let folder of folders">
+            <ion-item *ngIf="folder['.tag'] == 'folder'" detail-push (click)="openFolder(folder.path_lower)">
+              {{folder.name}}
+            </ion-item>
+            <ion-item *ngIf="folder['.tag'] == 'file'">
+              {{folder.name}}
+            </ion-item>
+          </div>
+        </ion-list>
