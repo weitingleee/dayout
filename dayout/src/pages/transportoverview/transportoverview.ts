@@ -24,9 +24,23 @@ export class TransportOverviewPage {
   posts: any;
   myDate: any; 
   timeStarts: any;
+  parking: any;
+  erp: any; 
+  amount: any; 
+  purpose: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private emailComposer: EmailComposer, private file: File, public http: Http,) {
     // If we navigated to this page, we will have an item available as a nav param
+    this.myDate = navParams.get('date');
+    this.timeStarts = navParams.get('time');
+    this.start = navParams.get('from');
+    this.destination = navParams.get('to');      
+    this.mode = navParams.get('tptmode');    
+    this.distance = navParams.get('mileage'); 
+    this.parking = navParams.get('parking'); 
+    this.erp = navParams.get('erp');   
+    this.amount = navParams.get('amount'); 
+    this.purpose = navParams.get('purpose'); 
   }
 
   takePicture(){

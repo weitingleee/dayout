@@ -81,26 +81,26 @@
       <ion-col>  
     <ion-item *ngIf="mode == 'Car'">
       <ion-label color="dayout" floating><ion-icon name="md-stats"></ion-icon>     Parking</ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="parking"></ion-input>
     </ion-item>
   </ion-col>
 
   <ion-col>
     <ion-item *ngIf="mode == 'Car'">
       <ion-label color="dayout" floating><ion-icon name="md-stats"></ion-icon>     ERP</ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="erp"></ion-input>
     </ion-item>
   </ion-col>  
 </ion-row>
 
     <ion-item>      
       <ion-label color="dayout" floating><ion-icon name="md-cash"></ion-icon>     Amount ($) </ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="amount"></ion-input>
     </ion-item>
     
     <ion-item>      
-      <ion-label color="dayout"><ion-icon name="md-briefcase"></ion-icon>     Purpose</ion-label>
-      <ion-textarea></ion-textarea>
+      <ion-label color="dayout" floating><ion-icon name="md-briefcase"></ion-icon>     Purpose</ion-label>
+      <ion-textarea [(ngModel)]="purpose"></ion-textarea>
     </ion-item>
   </ion-grid>
 
