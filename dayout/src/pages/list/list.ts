@@ -20,6 +20,8 @@ export class ListPage {
   private image: string; 
   start: any;
   destination: any;
+  start_txt: any;
+  destination_txt: any;
   distance: any;
   generate: boolean;
   posts: any;
@@ -30,6 +32,7 @@ export class ListPage {
   erp: any;
   amount: any;
   purpose: any;
+  userId: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private emailComposer: EmailComposer, private file: File, public http: Http,) {
     // If we navigated to this page, we will have an item available as a nav param
@@ -111,10 +114,12 @@ export class ListPage {
     });
     alert.present();     
    
-  if(this.destination == "undefined"){this.destination = "";}
-  if(this.destination_txt == "undefined"){this.destination_txt = "";}
-  if(this.start == "undefined"){this.start = "";}
-  if(this.start_txt == "undefined"){this.start_txt = "";}
+    if(this.destination == null){this.destination = "";}
+    if(this.destination_txt == null || this.destination_txt == "Others"){this.destination_txt = "";}
+    if(this.start == null){this.start = "";}
+    if(this.start_txt == null || this.start_txt == "Others"){this.start_txt = "";}
+    if(this.parking == null){this.parking="";}
+    if(this.erp == null){this.erp="";}
 
     this.navCtrl.push(TransportOverviewPage, {
       date: this.myDate,
@@ -159,7 +164,7 @@ export class ListPage {
     }    
   }
 
-
+  
 
 /*
 .then(() => {      
