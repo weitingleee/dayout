@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Apply Leave</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-grid>
+
+    <ion-row>
+      <ion-col width-40>
+        <ion-item>
+          <ion-label color="primary" floating>
+            <ion-icon name="md-calendar"></ion-icon> From Date</ion-label>
+          <ion-datetime displayFormat="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="fromDate">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col width-40>
+        <ion-item>
+          <ion-label color="primary" floating>
+            <ion-icon name="md-calendar"></ion-icon> To Date</ion-label>
+          <ion-datetime displayFormat="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="toDate">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+
+
+    </ion-row>
+
+    <ion-row>
+      <ion-col width-40>
+
+        <ion-item>
+
+          <ion-label color="primary" floating>
+
+            <ion-icon name="md-time"></ion-icon> Duration</ion-label>
+          <ion-select [(ngModel)]="modeFrom">
+            <ion-option value="AM">AM</ion-option>
+            <ion-option value="PM">PM</ion-option>
+            <ion-option value="Full">Full</ion-option>
+          </ion-select>
+        </ion-item>
+
+      </ion-col>
+      <ion-col width-40>
+        <ion-item>
+
+          <ion-label color="primary" floating>
+
+            <ion-icon name="md-time"></ion-icon> Duration</ion-label>
+          <ion-select [(ngModel)]="modeTo">
+
+            <ion-option value="AM">AM</ion-option>
+            <ion-option value="PM">PM</ion-option>
+            <ion-option value="Full">Full</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-item>
+
+      <ion-label color="primary">
+
+        <ion-icon name="md-paper"></ion-icon> Leave Type</ion-label>
+      <ion-select [(ngModel)]="leaveType" (ionChange)="changeLeave()">
+        <ion-option value="medicalLeave">Medical Leave</ion-option>
+        <ion-option value="childCare">Child Care</ion-option>
+        <ion-option value="parentCare">Parent Care</ion-option>
+        <ion-option value="annual">Annual</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="leaveType == 'annual'">
+      <ion-label>
+        <ion-icon name="md-plane"></ion-icon>Leaving Singapore</ion-label>
+      <ion-checkbox [(ngModel)]="overseas" (ionChange)="showDOT()"></ion-checkbox>
+    </ion-item>
+    <ion-item *ngIf="visibility">
+      <ion-label>Mode of Transport</ion-label>
+      <ion-select [(ngModel)]="transportModel">
+        <ion-option value="car">Car</ion-option>
+        <ion-option value="plane">Plane</ion-option>
+        <ion-option value="boat">Boat</ion-option>
+        <ion-option value="bus">Bus</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="visibility">
+      <ion-label>Mode of Transport</ion-label>
+      <ion-select [(ngModel)]="transportModel">
+        <ion-option value="car">Car</ion-option>
+        <ion-option value="plane">Plane</ion-option>
+        <ion-option value="boat">Boat</ion-option>
+        <ion-option value="bus">Bus</ion-option>
+      </ion-select>
+
+
+    </ion-item>
+
+
+    <ion-row>
+      <button ion-button round (click)="submitLeave()">Submit</button>
+    </ion-row>
+  </ion-grid>
+</ion-content>
