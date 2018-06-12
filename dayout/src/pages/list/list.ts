@@ -8,7 +8,6 @@ import { File } from '@ionic-native/file';
 import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { TransportOverviewPage } from '../transportoverview/transportoverview';
-import * as Papa from 'papaparse';
 import { Dropbox } from '../../providers/dropbox/dropbox';
 
 @Component({
@@ -94,11 +93,11 @@ export class ListPage {
 
   sendEmail(){
     //this.file.createFile(this.file.dataDirectory, 'transport.csv', true)
-    this.file.checkDir(this.file.externalDataDirectory, 'dayout').then(
-      _ =>console.log('Directory exists')).catch(      
+    this.file.checkDir(this.file.externalDataDirectory, 'dayout').then(_ 
+      =>console.log('Directory exists')).catch(      
       err =>{
         console.log('Directory doesn\'t exist');
-        file.createDir(file.externalDataDirectory, 'dayout', false);
+        this.file.createDir(this.file.externalDataDirectory, 'dayout', false);
       });
 
     this.file.createFile(this.file.externalDataDirectory+'/dayout/', 'transport'+this.start+this.destination+this.myDate+this.timeStarts+'.png', true).then(
@@ -169,21 +168,7 @@ export class ListPage {
       });
       alert.present();
     }    
-//https://www.papaparse.com/docs
-    sendtest(){
-      var csv = Papa.unparse([
-        {
-          "Column 1": "foo",
-          "Column 2": "bar"
-        },
-        {
-          "Column 1": "abc",
-          "Column 2": "def"
-        }
-      ]);
 
-console.log(csv);
-    }
 
   ionViewDidLoad(){
  
@@ -206,11 +191,11 @@ console.log(csv);
   }
  
   openFolder(path){
-   let loading = Loading.create({
+   let loading = this.loadingCtrl.create({
     content: 'Syncing from Dropbox...'
   });
  
-  this.nav.present(loading);
+  loading.present();
  
   this.dropbox.getFolders(path).subscribe(data => {
     this.folders = data.entries;
@@ -222,11 +207,11 @@ console.log(csv);
   }
  
   goBack(){
-   let loading = Loading.create({
+   let loading = this.loadingCtrl.create({
     content: 'Syncing from Dropbox...'
   });
  
-  this.nav.present(loading);
+  loading.present(=);
  
   this.dropbox.goBackFolder().subscribe(data => {
     this.folders = data.entries;
@@ -238,24 +223,3 @@ console.log(csv);
   }
  
   }
-/*
-.then(() => {      
-      let email = {
-        to: 'weitingleee@gmail.com',
-        attachments: [
-          //this.file.dataDirectory + 'transport.txt'
-          'file:///storage/emulated/0/Images/img_201851021629.png',
-          '/storage/emulated/0/Documents/transport.txt',
-        ],
-
-        subject: 'subject',
-        body: 'body text...',
-        isHtml: true
-      };
-      this.emailComposer.open(email);
-
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-    */

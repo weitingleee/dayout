@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 /*
   Generated class for the DropboxProvider provider.
@@ -12,8 +12,8 @@ export class Dropbox {
   accessToken: any;
   folderHistory: any = [];
 
-  constructor(public http: HttpClient) {
-    console.log('Hello DropboxProvider Provider');
+  constructor(public http: Http) {
+
   }
 
 setAccessToken(token) {
