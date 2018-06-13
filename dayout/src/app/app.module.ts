@@ -7,7 +7,7 @@ import { HttpModule } from '@angular/http'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { TransportPage } from '../pages/transport/transport';
 import { ApplyLeave } from '../pages/leave/apply-leave';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -15,7 +15,6 @@ import { InvoicePage } from '../pages/invoice/invoice';
 import { TransportOverviewPage } from '../pages/transportoverview/transportoverview';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { File } from '@ionic-native/file';
-import { Dropbox } from '../providers/dropbox/dropbox';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { DataProvider } from '../providers/data/data';
@@ -38,7 +37,7 @@ var firebaseConfig = {
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
+    TransportPage,
     ApplyLeave,
     InvoicePage,
     TransportOverviewPage,
@@ -58,7 +57,7 @@ var firebaseConfig = {
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
+    TransportPage,
     ApplyLeave,
     InvoicePage,
     TransportOverviewPage,
@@ -73,7 +72,6 @@ var firebaseConfig = {
     EmailComposer,
     HttpModule,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    Dropbox,
     HttpClient,
     DataProvider,
     InAppBrowser

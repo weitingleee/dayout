@@ -4,6 +4,7 @@ import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { InvoicePage } from '../invoice/invoice';
 import { ApplyLeave } from '../leave/apply-leave';
+import { TransportPage } from '../transport/transport';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -26,6 +27,8 @@ export class HomePage {
   }
   redirectLeave(){
     this.navCtrl.push(ApplyLeave)
-    
+  }
+  redirectTransport(){
+    this.navCtrl.push(TransportPage)
   }
 }

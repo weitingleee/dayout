@@ -59,7 +59,7 @@ export class MyFilesPage {
       })
     })
   }
-  deleteFile(file){
+  /*deleteFile(file){
     this.dataProvider.deleteFile(file).subscribe(()=>{
       let toast = this.toastCtrl.create({
         message: 'File removed!',
@@ -67,7 +67,7 @@ export class MyFilesPage {
       });
       toast.present();
     })
-  }
+  }*/
   viewFile(url){
     this.iab.create(url);
   }
