@@ -25,13 +25,14 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { MyFilesPage } from '../pages/my-files/my-files';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
+
 var firebaseConfig = {
-  apiKey: "AIzaSyBl7eQs9iH4hYjRX6mWC-6y8T8zspnjGh0",
-  authDomain: "sonic-glazing-206502.firebaseapp.com",
-  databaseURL: "https://sonic-glazing-206502.firebaseio.com",
-  projectId: "sonic-glazing-206502",
-  storageBucket: "sonic-glazing-206502.appspot.com",
-  messagingSenderId: "870662456368"
+  apiKey: "AIzaSyA9QCeqaZeR-E5R46-Gt0x2zVnq7AYUN2E",
+  authDomain: "api-project-328924746521.firebaseapp.com",
+  databaseURL: "https://api-project-328924746521.firebaseio.com",
+  projectId: "api-project-328924746521",
+  storageBucket: "api-project-328924746521.appspot.com",
+  messagingSenderId: "328924746521"
 };
 @NgModule({
   declarations: [

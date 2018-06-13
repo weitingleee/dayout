@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, ToastController } from 'ionic-angular';
 import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { DataProvider} from './../../providers/data/data';
 
 @Component({
   selector: 'page-home',
@@ -22,7 +23,7 @@ export class ApplyLeave {
     "message": "",
   };
 
-  constructor(public navCtrl: NavController, public http: Http, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public dataProvider: DataProvider, public http: Http, private alertCtrl: AlertController, private toastCtrl: ToastController) {
     this.modeFrom = 'Full';
     this.modeTo = 'Full';
     this.leaveType = 'Please select one';
@@ -96,6 +97,14 @@ export class ApplyLeave {
             days = days - 0.5;
           }
           console.log('number of days: ' + days)
+          console.log(this.fromDate);
+          console.log(this.toDate);
+          console.log(this.modeFrom);
+          console.log(this.modeTo);
+          console.log(this.leaveType);
+          this.uploadInformation("leave;\nJohn" +new Date().getTime() +"; "+    this.fromDate + ";"+this.toDate +";" + this.modeFrom + ";" + this.modeTo + ";" + this.leaveType+";");
+
+         // this.sendSMS(days);
         })
       } else {
         if (this.modeFrom === 'Full') {
@@ -104,18 +113,19 @@ export class ApplyLeave {
           days = 0.5;
         }
         console.log('number of days: ' + days)
+        //this.sendSMS(days);
       }
 
     }
   }
-  sendSMS() {
+  sendSMS(days) {
 
     let search = new URLSearchParams();
     search.append('ID', '95270002');
     search.append('Password', 'hello123');
     search.append('Mobile', '6592223123');
     search.append('Type', 'A');
-    search.append('Message', 'Your staff John has taken ' + + 'days of ' + this.leaveType);
+    search.append('Message', 'Good day, your staff John has taken ' + days + ' days of ' + this.leaveType + ' leave.');
 
     this.http.post('https://www.commzgate.net/gateway/SendMsg', search).subscribe(res => console.log(res.json.toString()));
 
@@ -130,10 +140,10 @@ export class ApplyLeave {
     alert.present();
   }
 
-  changeLeave(){
-    if(this.leaveType!=='annual'){
-      this.overseas=false;
-      this.visibility=false;
+  changeLeave() {
+    if (this.leaveType !== 'annual') {
+      this.overseas = false;
+      this.visibility = false;
     }
   }
   showConfirm(main, message) {
@@ -164,5 +174,20 @@ export class ApplyLeave {
     } else {
       this.visibility = true;
     }
+  }
+
+
+  uploadInformation(text) {
+    let upload = this.dataProvider.uploadToStorage(text);
+    upload.then().then(res => {
+      console.log('res:', res);
+      this.dataProvider.storeInfoToDatabse(res.metadata).then(() => {
+        let toast = this.toastCtrl.create({
+          message: 'New leave request added!',
+          duration: 3000
+        });
+        toast.present();
+      })
+    })
   }
 }
