@@ -17,6 +17,7 @@ export class ApplyLeave {
   posts: any;
   overseas: boolean = false;
   visibility: boolean = false;
+  continue:boolean=true;
 
   text = {
     "number": "",
@@ -52,8 +53,8 @@ export class ApplyLeave {
         this.showConfirm("Confirmation", "Are you coming back to the office in the afternoon on " + this.fromDate + "?");
       } else if (this.modeTo === 'PM') {
         this.showConfirm("Confirmation", "Are you coming back to the office in the morning on " + this.toDate + "?");
-      }
-      if (this.toDate !== undefined) {
+      } else
+      if (this.toDate !== undefined && this.continue) {
         days = (new Date(this.toDate).getTime() - new Date(this.fromDate).getTime()) / (1000 * 60 * 60 * 24) + 1;
         var publicHoliday = [];
 
@@ -155,6 +156,7 @@ export class ApplyLeave {
           text: 'Disagree',
           handler: () => {
             console.log('Disagree clicked');
+            this.continue 
           }
         },
         {

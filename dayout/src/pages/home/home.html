@@ -3,26 +3,18 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Apply Leave</ion-title>
+    <ion-title>Home Page</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-    <button ion-button (click)="sendSMS()">Send SMS</button>
+<ion-content padding class="bg-image">
+  <button ion-button color="white" large full (click)="redirectInvoice()">Invoice
+  </button>
+  <button ion-button color="white" large full (click)="redirectLeave()">Leave 
 
-    <ion-item>
-      <ion-label color="primary" floating>Starting Location</ion-label>
-      <ion-input [(ngModel)]="start"> </ion-input>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label color="primary" floating>Destination</ion-label>
-      <ion-input  [(ngModel)]="destination"></ion-input>
-    </ion-item>
-    
-    <button ion-button full (click)="generateDistance()" color="secondary">Generate distance</button>
-    
-    <ion-item>
-      <ion-label color="primary" floating>Distance</ion-label>
-      <ion-input [readonly]="true" color="primary"  [(ngModel)]="distance" floating></ion-input>
-    </ion-item></ion-content>
+  </button>
+  <button ion-button color="white" large full (click)="redirectTransport()">Transport
+   
+  </button>
+
+</ion-content>

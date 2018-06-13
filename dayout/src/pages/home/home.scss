@@ -1,3 +1,14 @@
 page-home {
-
+    .bg-image{
+        background-image: url('../assets/imgs/windows_7_character_wallpaper_img20.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+    .button{
+        font-family: Lato;
+        font-weight: 700;
+        font-size: 1.2em;
+        line-height: 1.5;
+    }
 }
