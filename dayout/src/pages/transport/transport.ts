@@ -10,6 +10,8 @@ import 'rxjs/add/operator/map';
 import { TransportOverviewPage } from '../transportoverview/transportoverview';
 import { storage, initializeApp } from 'firebase';
 import { FIREBASE_CONFIG } from '../../app/firebase.config';
+import firebase from 'firebase';
+
 
 @Component({
   selector: 'page-transport',
@@ -30,26 +32,43 @@ export class TransportPage {
   erp: any;
   amount: any;
   purpose: any;
+  captureDataUrl: string;
+
 
   constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, public http: Http,) {
     initializeApp(FIREBASE_CONFIG);
   }
 
-  async takePicture(){
+  takePicture(){
     try{
       //Define camera options
-      const options: CameraOptions = {
+          const cameraOptions: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+    };
+
+    this.camera.getPicture(cameraOptions).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      this.captureDataUrl = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      // Handle error
+    });
+
+      /*const options: CameraOptions = {
         quality:100, 
         destinationType: this.camera.DestinationType.DATA_URL, 
         encodingType: this.camera.EncodingType.JPEG,
         saveToPhotoAlbum: true, 
         mediaType: this.camera.MediaType.PICTURE,
         correctOrientation: true
-      }
-        const result = await this.camera.getPicture(options);
-        const image = 'data:image/jpeg;base64,${result}';
-        const pictures = storage().ref('pictures/receipts');
-        pictures.putString(image, 'data_url');
+      }*/
+        //const result = await this.camera.getPicture(options);
+        //const image = 'data:image/jpeg;base64,${result}';
+        //const pictures = firebase.storage().ref('pictures/receipts');
+        //pictures.putString(image, 'data_url');
     }
     catch(e){
       console.error(e);
@@ -82,6 +101,28 @@ export class TransportPage {
       amount: this.amount,
       purpose: this.purpose,
     });
+
+    let storageRef = firebase.storage().ref('images/');
+    // Create a timestamp as filename
+    const filename = Math.floor(Date.now() / 1000);
+
+    // Create a reference to 'images/todays-date.jpg'
+    const imageRef = storageRef.child(`images/${filename}.jpg`);
+
+    imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot)=> {
+     // Do something here when the data is succesfully uploaded!
+     this.displaySuccessAlert(filename);
+    });
+
+  }
+displaySuccessAlert(res){
+    console.log(res);
+    let alert = this.alertCtrl.create({
+      title: 'Saved image to gallery',
+      subTitle: res,
+      buttons: ['OK']
+    });
+    alert.present();  
   }
 
   generateDistance(){
