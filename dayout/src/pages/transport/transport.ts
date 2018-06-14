@@ -47,6 +47,7 @@ export class TransportPage {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
+      cameraDirection: this.camera.Direction.BACK,
     };
 
     this.camera.getPicture(cameraOptions).then((imageData) => {

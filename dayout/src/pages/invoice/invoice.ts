@@ -5,6 +5,9 @@ import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, Camer
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery'; 
 import {EmailComposer} from '@ionic-native/email-composer';
 import {File} from '@ionic-native/file';
+import { storage, initializeApp } from 'firebase';
+import { FIREBASE_CONFIG } from '../../app/firebase.config';
+import firebase from 'firebase';
 
 @Component({
   selector: 'page-invoice',
@@ -16,9 +19,10 @@ export class InvoicePage {
   icons: string[];
   items: Array<{title: string}>;
   private image: string; 
+  captureDataUrl: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private emailComposer: EmailComposer, private file: File) {
-    // If we navigated to this page, we will have an item available as a nav param
+    initializeApp(FIREBASE_CONFIG);
   }
 
   takePicture(){
