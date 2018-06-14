@@ -105,7 +105,7 @@ export class ApplyLeave {
           console.log(this.leaveType);
           this.uploadInformation("leave;\nJohn" +new Date().getTime() +"; "+    this.fromDate + ";"+this.toDate +";" + this.modeFrom + ";" + this.modeTo + ";" + this.leaveType+";");
 
-         // this.sendSMS(days);
+         this.sendSMS(days);
         })
       } else {
         if (this.modeFrom === 'Full') {
@@ -114,7 +114,7 @@ export class ApplyLeave {
           days = 0.5;
         }
         console.log('number of days: ' + days)
-        //this.sendSMS(days);
+        this.sendSMS(days);
       }
 
     }
@@ -122,11 +122,11 @@ export class ApplyLeave {
   sendSMS(days) {
 
     let search = new URLSearchParams();
-    search.append('ID', '95270002');
+    search.append('ID', '95240002');
     search.append('Password', 'hello123');
     search.append('Mobile', '6592223123');
     search.append('Type', 'A');
-    search.append('Message', 'Good day, your staff John has taken ' + days + ' days of ' + this.leaveType + ' leave.');
+    search.append('Message', 'Good day, your staff John has taken ' + days + ' days of ' + this.leaveType + ' leave from '+ this.fromDate +' to ' + this.toDate +'.');
 
     this.http.post('https://www.commzgate.net/gateway/SendMsg', search).subscribe(res => console.log(res.json.toString()));
 
