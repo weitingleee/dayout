@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, ToastController, ModalController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, CameraPreviewDimensions } from '@ionic-native/camera-preview';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery'; 
-import { EmailComposer } from '@ionic-native/email-composer';
 import { File } from '@ionic-native/file';
 import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -11,6 +10,8 @@ import { TransportOverviewPage } from '../transportoverview/transportoverview';
 import { storage, initializeApp } from 'firebase';
 import { FIREBASE_CONFIG } from '../../app/firebase.config';
 import firebase from 'firebase';
+import { DataProvider} from './../../providers/data/data';
+//import {AutocompletePage} from './autocomplete';
 
 
 @Component({
@@ -33,22 +34,25 @@ export class TransportPage {
   amount: any;
   purpose: any;
   captureDataUrl: string;
+  address: any; 
 
-
-  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, public http: Http,) {
+  constructor(private modalCtrl:ModalController, private toastCtrl: ToastController, public dataProvider: DataProvider, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, public http: Http,) {
     initializeApp(FIREBASE_CONFIG);
+    this.address = {
+      place: ''
+    };
   }
 
   takePicture(){
     try{
       //Define camera options
           const cameraOptions: CameraOptions = {
-      quality: 50,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      cameraDirection: this.camera.Direction.BACK,
-    };
+          quality: 50,
+          destinationType: this.camera.DestinationType.DATA_URL,
+          encodingType: this.camera.EncodingType.JPEG,
+          mediaType: this.camera.MediaType.PICTURE,
+          cameraDirection: this.camera.Direction.BACK,
+      };
 
     this.camera.getPicture(cameraOptions).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
@@ -57,24 +61,12 @@ export class TransportPage {
     }, (err) => {
       // Handle error
     });
-
-      /*const options: CameraOptions = {
-        quality:100, 
-        destinationType: this.camera.DestinationType.DATA_URL, 
-        encodingType: this.camera.EncodingType.JPEG,
-        saveToPhotoAlbum: true, 
-        mediaType: this.camera.MediaType.PICTURE,
-        correctOrientation: true
-      }*/
-        //const result = await this.camera.getPicture(options);
-        //const image = 'data:image/jpeg;base64,${result}';
-        //const pictures = firebase.storage().ref('pictures/receipts');
-        //pictures.putString(image, 'data_url');
     }
     catch(e){
       console.error(e);
     }
   }
+
   submitTransport(){
     let alert = this.alertCtrl.create({
       title: 'Done',
@@ -112,8 +104,10 @@ export class TransportPage {
 
     imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot)=> {
      // Do something here when the data is succesfully uploaded!
-     this.displaySuccessAlert(filename);
+     this.displayToastSuccess(filename);
     });
+
+    this.uploadInformation("Date: " + this.myDate + "\nTime: " + this.timeStarts + "\nStart Location: " + this.start_txt + " " + this.start + "\nEnd Location: " + this.destination_txt + " " + this.destination + "\nMode: "+ this.mode + "\nMileage: " + this.distance + "\nParking: " + this.parking + "\nERP: " + this.erp + "\nAmount: " + this.amount + "\nPurpose: " + this.purpose);
 
   }
 displaySuccessAlert(res){
@@ -153,4 +147,36 @@ displaySuccessAlert(res){
       });
       alert.present();
     }    
+
+    uploadInformation(text) {
+      let upload = this.dataProvider.uploadToStorage(text);
+      upload.then().then(res => {
+        console.log('res:', res);
+        this.dataProvider.storeInfoToDatabse(res.metadata).then(() => {
+          let toast = this.toastCtrl.create({
+            message: 'New transport claim added!',
+            duration: 3000
+          });
+          toast.present();
+        })
+      })
+    }
+
+    displayToastSuccess(filename){
+      let toast = this.toastCtrl.create({
+        message: 'New image ' + filename + ' uploaded!',
+        duration: 3000
+      });
+      toast.present();      
+    }
+
+    showAddressModal () {
+      /*let modal = this.modalCtrl.create(AutocompletePage);
+      let me = this;
+      modal.onDidDismiss(data => {
+        this.address.place = data;
+      });
+      modal.present();*/
+    }
+
   }

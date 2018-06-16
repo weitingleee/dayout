@@ -37,7 +37,7 @@
       </ion-select>
     </ion-item>
     <ion-item *ngIf="start_txt == 'Others'">
-      <ion-input [(ngModel)]="start" placeholder="Address or postal code"></ion-input>
+      <ion-input type=text (click)="showAddressModal()" [(ngModel)]="start" placeholder="Address or postal code"></ion-input>
     </ion-item>
   </ion-col>
 
