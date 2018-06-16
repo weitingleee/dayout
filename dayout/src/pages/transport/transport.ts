@@ -10,7 +10,6 @@ import { TransportOverviewPage } from '../transportoverview/transportoverview';
 import { storage, initializeApp } from 'firebase';
 import { FIREBASE_CONFIG } from '../../app/firebase.config';
 import firebase from 'firebase';
-import { DataProvider} from './../../providers/data/data';
 //import {AutocompletePage} from './autocomplete';
 
 
@@ -36,7 +35,7 @@ export class TransportPage {
   captureDataUrl: string;
   address: any; 
 
-  constructor(private modalCtrl:ModalController, private toastCtrl: ToastController, public dataProvider: DataProvider, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, public http: Http,) {
+  constructor(private modalCtrl:ModalController, private toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, public http: Http,) {
     initializeApp(FIREBASE_CONFIG);
     this.address = {
       place: ''
@@ -148,24 +147,23 @@ displaySuccessAlert(res){
       alert.present();
     }    
 
-    uploadInformation(text) {
-      let upload = this.dataProvider.uploadToStorage(text);
-      upload.then().then(res => {
-        console.log('res:', res);
-        this.dataProvider.storeInfoToDatabse(res.metadata).then(() => {
-          let toast = this.toastCtrl.create({
-            message: 'New transport claim added!',
-            duration: 3000
-          });
-          toast.present();
-        })
+    uploadInformation(information) {
+      let uploadRef = firebase.storage().ref('text/');
+      const filename = Math.floor(Date.now() / 1000);
+      const textRef = uploadRef.child(`text/${filename}.txt`);
+      uploadRef.putString(information).then(()=> {
+        let toast = this.toastCtrl.create({
+          message: 'New transport claim(' + filename + ') added!',
+          duration: 3000
+        });
+        toast.present();
       })
     }
 
     displayToastSuccess(filename){
       let toast = this.toastCtrl.create({
         message: 'New image ' + filename + ' uploaded!',
-        duration: 3000
+        duration: 1000
       });
       toast.present();      
     }
