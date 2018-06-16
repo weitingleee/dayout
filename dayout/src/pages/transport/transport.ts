@@ -2,13 +2,10 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController, ToastController, ModalController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, CameraPreviewDimensions } from '@ionic-native/camera-preview';
-import { Base64ToGallery } from '@ionic-native/base64-to-gallery'; 
-import { File } from '@ionic-native/file';
 import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { TransportOverviewPage } from '../transportoverview/transportoverview';
 import { storage, initializeApp } from 'firebase';
-import { FIREBASE_CONFIG } from '../../app/firebase.config';
 import firebase from 'firebase';
 //import {AutocompletePage} from './autocomplete';
 
@@ -35,8 +32,8 @@ export class TransportPage {
   captureDataUrl: string;
   address: any; 
 
-  constructor(private modalCtrl:ModalController, private toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, public http: Http,) {
-    initializeApp(FIREBASE_CONFIG);
+  constructor(private modalCtrl:ModalController, private toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, public http: Http,) {
+    //initializeApp(FIREBASE_CONFIG);
     this.address = {
       place: ''
     };

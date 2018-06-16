@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Invoice Confirmation</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content>
+      <ion-grid>
+          <ion-row>
+            <ion-col>     
+            <ion-content padding>
+                <label>Invoice Date: {{myDate}}</label>
+            </ion-content>
+            </ion-col>
+        
+            <ion-col>     
+                <ion-content padding>
+                <label>Description: {{description}}</label>
+                </ion-content>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

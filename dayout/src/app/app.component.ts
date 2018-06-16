@@ -8,6 +8,7 @@ import { TransportPage } from '../pages/transport/transport';
 import { ApplyLeave } from '../pages/leave/apply-leave';
 import { InvoicePage } from '../pages/invoice/invoice';
 import { TransportOverviewPage } from '../pages/transportoverview/transportoverview';
+import { InvoiceOverviewPage } from '../pages/invoiceoverview/invoiceoverview';
 import { MyFilesPage } from '../pages/my-files/my-files';
 import {InAppBrowser} from '@ionic-native/in-app-browser';
 @Component({
@@ -28,8 +29,7 @@ export class MyApp {
       { title: 'Home', component: HomePage },
       { title: 'Transport', component: TransportPage },
       { title: 'Leave', component: ApplyLeave },
-      { title: 'Invoice', component: InvoicePage },
-      { title: 'Transport Overview', component: TransportOverviewPage },
+      { title: 'Invoice', component: InvoicePage },      
       { title: 'My Files', component: MyFilesPage },
     ];
 

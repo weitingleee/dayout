@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, ToastController, ModalController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, CameraPreviewDimensions } from '@ionic-native/camera-preview';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery'; 
-import {EmailComposer} from '@ionic-native/email-composer';
-import {File} from '@ionic-native/file';
+import { File } from '@ionic-native/file';
+import { Http, URLSearchParams } from '@angular/http';
+import 'rxjs/add/operator/map';
+import { InvoiceOverviewPage } from '../invoiceoverview/invoiceoverview';
 import { storage, initializeApp } from 'firebase';
-import { FIREBASE_CONFIG } from '../../app/firebase.config';
+//import { FIREBASE_CONFIG } from '../../app/firebase.config';
 import firebase from 'firebase';
 
 @Component({
@@ -15,75 +17,36 @@ import firebase from 'firebase';
 })
 
 export class InvoicePage {
-  mileage: any;
-  icons: string[];
-  items: Array<{title: string}>;
-  private image: string; 
+  myDate: any; 
+  description: any;
   captureDataUrl: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, private emailComposer: EmailComposer, private file: File) {
-    initializeApp(FIREBASE_CONFIG);
+  constructor(private modalCtrl:ModalController, private toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery, public http: Http,) {
+    //initializeApp(FIREBASE_CONFIG);
   }
 
   takePicture(){
-    const options: CameraOptions = {
-      quality:100, 
-      destinationType: this.camera.DestinationType.DATA_URL, 
-      saveToPhotoAlbum: true, 
-      mediaType: this.camera.MediaType.PICTURE
-    }
+    try{
+      //Define camera options
+          const cameraOptions: CameraOptions = {
+          quality: 50,
+          destinationType: this.camera.DestinationType.DATA_URL,
+          encodingType: this.camera.EncodingType.JPEG,
+          mediaType: this.camera.MediaType.PICTURE,
+          cameraDirection: this.camera.Direction.BACK,
+      };
 
-    this.camera.getPicture(options).then((imageData) => { 
-      this.image = 'data:image/jpeg;base64,' + imageData;
-
-      this.base64ToGallery.base64ToGallery(imageData).then(
-        res => {
-          console.log('Saved image to gallery', res);
-          this.displaySuccessAlert(res);
-          this.sendEmail();
-        },
-        err => {
-          console.log('Error saving image to gallery', err);
-          this.displayErrorAlert(err);
-        }
-      );
+    this.camera.getPicture(cameraOptions).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      this.captureDataUrl = 'data:image/jpeg;base64,' + imageData;
     }, (err) => {
-      this.displayErrorAlert(err);
+      // Handle error
     });
-  }
-
-  displayErrorAlert(err){
-    console.log(err);
-    let alert = this.alertCtrl.create({
-      title: 'Error',
-      subTitle: err,
-      buttons: ['OK']
-    });
-    alert.present();  
-  }
-
-  displaySuccessAlert(res){
-    console.log(res);
-    let alert = this.alertCtrl.create({
-      title: 'Saved image to gallery',
-      subTitle: res,
-      buttons: ['OK']
-    });
-    alert.present();  
-  }
-
-  sendEmail(){
-    //this.file.createFile(this.file.dataDirectory, 'transport.csv', true)
-    this.file.createFile(this.file.externalRootDirectory, 'transport.docx', true).then(
-      res => {
-        console.log('Saved image to gallery', res);
-        this.displaySuccessAlert(res);
-      },
-      err => {
-        console.log('Error saving image to gallery', err);
-        this.displayErrorAlert(err);
-      }
-    )
+    }
+    catch(e){
+      console.error(e);
+    }
   }
 
   submitTransport(){
@@ -93,29 +56,55 @@ export class InvoicePage {
       buttons: ['OK']
     });
     alert.present();     
-   //GO TO OVERVIEW PAGE 
-  }
-}
-
-
-/*
-.then(() => {      
-      let email = {
-        to: 'weitingleee@gmail.com',
-        attachments: [
-          //this.file.dataDirectory + 'transport.txt'
-          'file:///storage/emulated/0/Images/img_201851021629.png',
-          '/storage/emulated/0/Documents/transport.txt',
-        ],
-
-        subject: 'subject',
-        body: 'body text...',
-        isHtml: true
-      };
-      this.emailComposer.open(email);
-
-    })
-    .catch((err) => {
-      console.error(err);
+   
+    this.navCtrl.push(InvoiceOverviewPage, {
+      date: this.myDate,
+      description: this.description,
     });
-    */
+
+    let storageRef = firebase.storage().ref('invoices/');
+    // Create a timestamp as filename
+    const filename = Math.floor(Date.now() / 1000);
+
+    // Create a reference to 'images/todays-date.jpg'
+    const imageRef = storageRef.child(`invoices/${filename}.jpg`);
+
+    imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot)=> {
+     // Do something here when the data is succesfully uploaded!
+     this.displayToastSuccess(filename);
+    });
+
+    this.uploadInformation("Date: " + this.myDate + "\nDescription: " + this.description);
+
+  }
+displaySuccessAlert(res){
+    console.log(res);
+    let alert = this.alertCtrl.create({
+      title: 'Saved invoice to gallery',
+      subTitle: res,
+      buttons: ['OK']
+    });
+    alert.present();  
+  }
+    
+  uploadInformation(information) {
+      let uploadRef = firebase.storage().ref('text/');
+      const filename = Math.floor(Date.now() / 1000);
+      const textRef = uploadRef.child(`text/${filename}.txt`);
+      uploadRef.putString(information).then(()=> {
+        let toast = this.toastCtrl.create({
+          message: 'New invoice submission(' + filename + ') added!',
+          duration: 3000
+        });
+        toast.present();
+      })
+    }
+
+    displayToastSuccess(filename){
+      let toast = this.toastCtrl.create({
+        message: 'New image ' + filename + ' uploaded!',
+        duration: 1000
+      });
+      toast.present();      
+    }
+  }

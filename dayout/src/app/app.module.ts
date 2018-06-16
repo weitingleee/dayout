@@ -13,6 +13,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { InvoicePage } from '../pages/invoice/invoice';
 import { TransportOverviewPage } from '../pages/transportoverview/transportoverview';
+import { InvoiceOverviewPage } from '../pages/invoiceoverview/invoiceoverview';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { File } from '@ionic-native/file';
 import { HttpClient } from '@angular/common/http';
@@ -42,6 +43,7 @@ var firebaseConfig = {
     InvoicePage,
     TransportOverviewPage,
     MyFilesPage,
+    InvoiceOverviewPage,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +64,7 @@ var firebaseConfig = {
     InvoicePage,
     TransportOverviewPage,
     MyFilesPage,
+    InvoiceOverviewPage,
   ],
   providers: [
     StatusBar,
