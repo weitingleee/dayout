@@ -148,7 +148,7 @@ displaySuccessAlert(res){
       let uploadRef = firebase.storage().ref('text/');
       const filename = Math.floor(Date.now() / 1000);
       const textRef = uploadRef.child(`text/${filename}.txt`);
-      uploadRef.putString(information).then(()=> {
+      uploadRef.putString(information).then((snapshot)=> {
         let toast = this.toastCtrl.create({
           message: 'New transport claim(' + filename + ') added!',
           duration: 3000
