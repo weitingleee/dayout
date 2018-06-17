@@ -24,7 +24,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { MyFilesPage } from '../pages/my-files/my-files';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 var firebaseConfig = {
   apiKey: "AIzaSyA9QCeqaZeR-E5R46-Gt0x2zVnq7AYUN2E",
@@ -77,7 +77,8 @@ var firebaseConfig = {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     HttpClient,
     DataProvider,
-    InAppBrowser
+    InAppBrowser,
+    SocialSharing
   ]
 })
 export class AppModule { }
