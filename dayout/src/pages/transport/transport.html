@@ -93,7 +93,7 @@
   </ion-col>  
 </ion-row>
 
-    <ion-item>      
+    <ion-item *ngIf="mode == 'Taxi'">      
       <ion-label color="primary" floating><ion-icon name="md-cash"></ion-icon>     Amount ($) </ion-label>
       <ion-input [(ngModel)]="amount"></ion-input>
     </ion-item>

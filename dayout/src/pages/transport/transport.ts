@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import { TransportOverviewPage } from '../transportoverview/transportoverview';
 import { storage, initializeApp } from 'firebase';
 import firebase from 'firebase';
+import { FIREBASE_CONFIG } from '../../app/firebase.config';
 //import {AutocompletePage} from './autocomplete';
 
 
@@ -33,7 +34,7 @@ export class TransportPage {
   address: any; 
 
   constructor(private modalCtrl:ModalController, private toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, public http: Http,) {
-    //initializeApp(FIREBASE_CONFIG);
+    initializeApp(FIREBASE_CONFIG);
     this.address = {
       place: ''
     };
@@ -66,7 +67,7 @@ export class TransportPage {
   submitTransport(){
     let alert = this.alertCtrl.create({
       title: 'Done',
-      subTitle: 'Sent successfully',
+      subTitle: 'Sent',
       buttons: ['OK']
     });
     alert.present();     
@@ -91,30 +92,30 @@ export class TransportPage {
       purpose: this.purpose,
     });
 
-    let storageRef = firebase.storage().ref('images/');
-    // Create a timestamp as filename
-    const filename = Math.floor(Date.now() / 1000);
+    if(this.captureDataUrl != null){
+      let storageRef = firebase.storage().ref('images/');
+      // Create a timestamp as filename
+      const filename = Math.floor(Date.now() / 1000);
 
-    // Create a reference to 'images/todays-date.jpg'
-    const imageRef = storageRef.child(`images/${filename}.jpg`);
+      // Create a reference to 'images/todays-date.jpg'
+      const imageRef = storageRef.child(`images/${filename}.jpg`);
 
-    imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot)=> {
-     // Do something here when the data is succesfully uploaded!
-     this.displayToastSuccess(filename);
-    });
-
-    this.uploadInformation("Date: " + this.myDate + "\nTime: " + this.timeStarts + "\nStart Location: " + this.start_txt + " " + this.start + "\nEnd Location: " + this.destination_txt + " " + this.destination + "\nMode: "+ this.mode + "\nMileage: " + this.distance + "\nParking: " + this.parking + "\nERP: " + this.erp + "\nAmount: " + this.amount + "\nPurpose: " + this.purpose);
-
+      imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot)=> {
+      // Do something here when the data is succesfully uploaded!
+      this.displayToastSuccess(filename);
+      });
+    }    
   }
-displaySuccessAlert(res){
-    console.log(res);
-    let alert = this.alertCtrl.create({
-      title: 'Saved image to gallery',
-      subTitle: res,
-      buttons: ['OK']
-    });
-    alert.present();  
-  }
+
+  displaySuccessAlert(res){
+      console.log(res);
+      let alert = this.alertCtrl.create({
+        title: 'Saved',
+        subTitle: res,
+        buttons: ['OK']
+      });
+      alert.present();  
+    }
 
   generateDistance(){
     this.posts = null;
@@ -143,19 +144,6 @@ displaySuccessAlert(res){
       });
       alert.present();
     }    
-
-    uploadInformation(information) {
-      let uploadRef = firebase.storage().ref('text/');
-      const filename = Math.floor(Date.now() / 1000);
-      const textRef = uploadRef.child(`text/${filename}.txt`);
-      uploadRef.putString(information).then((snapshot)=> {
-        let toast = this.toastCtrl.create({
-          message: 'New transport claim(' + filename + ') added!',
-          duration: 3000
-        });
-        toast.present();
-      })
-    }
 
     displayToastSuccess(filename){
       let toast = this.toastCtrl.create({
