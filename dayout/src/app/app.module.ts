@@ -26,6 +26,13 @@ import { MyFilesPage } from '../pages/my-files/my-files';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
+
+import { LocationSelectPage } from '../pages/location-select/location-select';
+import { Connectivity } from '../providers/connectivity-service/connectivity-service';
+import { GoogleMaps } from '../providers/google-maps/google-maps';
+import { Network } from '@ionic-native/network';
+import { Geolocation } from '@ionic-native/geolocation';
+ 
 var firebaseConfig = {
   apiKey: "AIzaSyA9QCeqaZeR-E5R46-Gt0x2zVnq7AYUN2E",
   authDomain: "api-project-328924746521.firebaseapp.com",
@@ -44,6 +51,7 @@ var firebaseConfig = {
     TransportOverviewPage,
     MyFilesPage,
     InvoiceOverviewPage,
+    LocationSelectPage,
   ],
   imports: [
     BrowserModule,
@@ -52,8 +60,7 @@ var firebaseConfig = {
     HttpClientModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireStorageModule
-
+    AngularFireStorageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -65,6 +72,7 @@ var firebaseConfig = {
     TransportOverviewPage,
     MyFilesPage,
     InvoiceOverviewPage,
+    LocationSelectPage,
   ],
   providers: [
     StatusBar,
@@ -79,6 +87,10 @@ var firebaseConfig = {
     DataProvider,
     InAppBrowser,
     SocialSharing
+    Connectivity,
+    GoogleMaps,
+    Network,
+    Geolocation
   ]
 })
 export class AppModule { }

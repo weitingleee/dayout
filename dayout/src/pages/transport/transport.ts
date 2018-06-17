@@ -8,8 +8,7 @@ import { TransportOverviewPage } from '../transportoverview/transportoverview';
 import { storage, initializeApp } from 'firebase';
 import firebase from 'firebase';
 import { FIREBASE_CONFIG } from '../../app/firebase.config';
-//import {AutocompletePage} from './autocomplete';
-
+import { LocationSelectPage } from '../location-select/location-select';
 
 @Component({
   selector: 'page-transport',
@@ -153,13 +152,22 @@ export class TransportPage {
       toast.present();      
     }
 
-    showAddressModal () {
-      /*let modal = this.modalCtrl.create(AutocompletePage);
-      let me = this;
-      modal.onDidDismiss(data => {
-        this.address.place = data;
-      });
-      modal.present();*/
-    }
+    showAutocomplete(){
+      this.http.get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Vict&types=geocode&language=en&key=AIzaSyDxtuw_QtbqUJ3qZe4T2NXxSJFrJ3GztrA').map(res => res.json()).subscribe(data => {
+        this.displaySuccessAlert(data);    
+    })
+  }
+
+  launchLocationPage(){
+    
+           let modal = this.modalCtrl.create(LocationSelectPage);
+    
+           modal.onDidDismiss((location) => {
+               console.log(location);
+           });
+    
+           modal.present();   
+    
+       }
 
   }

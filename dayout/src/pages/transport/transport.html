@@ -37,7 +37,7 @@
       </ion-select>
     </ion-item>
     <ion-item *ngIf="start_txt == 'Others'">
-      <ion-input type=text (click)="showAddressModal()" [(ngModel)]="start" placeholder="Address or postal code"></ion-input>
+      <ion-input type=text [(ngModel)]="start" placeholder="Address or postal code"></ion-input>      
     </ion-item>
   </ion-col>
 
@@ -113,5 +113,10 @@
     <ion-row>
      <button color='secondary' ion-button round (click)="submitTransport()">Submit</button>
     </ion-row>
+
+    <ion-row>
+      <button ion-button (click)="launchLocationPage()">Select Location</button>     
+    </ion-row>
+
     </ion-content>
     
