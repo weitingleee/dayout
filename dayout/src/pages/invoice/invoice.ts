@@ -20,7 +20,9 @@ export class InvoicePage {
   captureDataUrl: string;
 
   constructor(private modalCtrl:ModalController, private toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, public http: Http,) {
-    initializeApp(FIREBASE_CONFIG);
+    if (!firebase.apps.length) { 
+      initializeApp(FIREBASE_CONFIG);
+    }
   }
 
   takePicture(){
