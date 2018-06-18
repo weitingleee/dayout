@@ -86,7 +86,7 @@ var firebaseConfig = {
     HttpClient,
     DataProvider,
     InAppBrowser,
-    SocialSharing
+    SocialSharing,
     Connectivity,
     GoogleMaps,
     Network,
