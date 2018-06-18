@@ -173,7 +173,7 @@ export class LocationSelectPage {
     }
 
     save(){
-console.log(this.startlocation);
+
         if(this.startlocation != undefined && this.endlocation != undefined){
             this.navCtrl.push(TransportPage, {
                 start: this.startlocation.name,    
@@ -181,13 +181,13 @@ console.log(this.startlocation);
             });
         }
         
-        if(this.startlocation != undefined){
+        else if(this.startlocation != undefined){
             this.navCtrl.push(TransportPage, {
                 start: this.startlocation.name,                 
             });
         }
 
-        if(this.endlocation != undefined){
+        else if(this.endlocation != undefined){
             this.navCtrl.push(TransportPage, {
                 end: this.endlocation.name,                 
             });
@@ -197,7 +197,7 @@ console.log(this.startlocation);
             this.viewCtrl.dismiss(this.startlocation);
         }
         
-        if(this.endlocation != undefined && this.startlocation ==undefined){
+        else if(this.endlocation != undefined && this.startlocation ==undefined){
             this.viewCtrl.dismiss(this.endlocation);
         }
     }

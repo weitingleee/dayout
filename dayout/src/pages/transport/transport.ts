@@ -40,6 +40,7 @@ export class TransportPage {
 
     this.start = navParams.get('start');
     this.destination = navParams.get('end');
+
   }
 
   takePicture(){
@@ -171,7 +172,7 @@ export class TransportPage {
            });
           }
 
-          if(this.destination_txt != undefined){
+          else if(this.destination_txt != undefined){
            modal.onDidDismiss((endlocation) => {
                console.log(endlocation);
            });
