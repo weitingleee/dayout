@@ -70,7 +70,7 @@
       <ion-label color="primary">
 
         <ion-icon name="md-paper"></ion-icon> Leave Type</ion-label>
-      <ion-select [(ngModel)]="leaveType"(ionChange)="changeLeave()">
+      <ion-select [(ngModel)]="leaveType" (ionChange)="changeLeave()">
         <ion-option value="medicalLeave">Medical</ion-option>
         <ion-option value="childCare">Child Care</ion-option>
         <ion-option value="parentCare">Parent Care</ion-option>
@@ -85,17 +85,50 @@
     <ion-item *ngIf="visibility">
       <ion-label>Mode of Transport</ion-label>
       <ion-select [(ngModel)]="transportModel">
-          <ion-option value="car">Car</ion-option>
-          <ion-option value="plane">Plane</ion-option>
-          <ion-option value="boat">Boat</ion-option>
-          <ion-option value="bus">Bus</ion-option>
-        </ion-select>
+        <ion-option value="car">Car</ion-option>
+        <ion-option value="plane">Plane</ion-option>
+        <ion-option value="boat">Boat</ion-option>
+        <ion-option value="bus">Bus</ion-option>
+      </ion-select>
     </ion-item>
-
+    <ion-item *ngIf="visibility">
+      <ion-label>Country</ion-label>
+      <ion-select [(ngModel)]="countryModel">
+        <ion-option value="malaysia">Malaysia</ion-option>
+        <ion-option value="japan">Japan</ion-option>
+        <ion-option value="korea">Korea</ion-option>
+        <ion-option value="thailand">Thailand</ion-option>
+      </ion-select>
+    </ion-item>
 
 
     <ion-row>
       <button color="secondary" ion-button round (click)="submitLeave()">Submit</button>
     </ion-row>
+
+    <ion-item>
+      <ion-label color="primary" floating>Share Via</ion-label>
+      <ion-input [readonly]="true" color="primary" [(ngModel)]="shareVia" floating></ion-input>
+    </ion-item>
   </ion-grid>
+
+  <ion-fab left bottom>
+    <button ion-fab color="secondary">
+      <ion-icon name="arrow-dropright"></ion-icon>
+    </button>
+    <ion-fab-list side="right">
+      <button ion-fab>
+        <ion-icon name="close-circle" (click)="closeShare()"></ion-icon>
+      </button>
+      <button ion-fab>
+        <ion-icon name="dayout-sms" (click)="shareViaSMS()"></ion-icon>
+      </button>
+      <button ion-fab>
+        <ion-icon name="dayout-telegram" (click)="shareViaTelegram()"></ion-icon>
+      </button>
+      <button ion-fab>
+        <ion-icon name="dayout-whatsapp" (click)="shareViaWhatsapp()"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
