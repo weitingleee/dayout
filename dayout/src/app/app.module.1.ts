@@ -85,6 +85,7 @@ var firebaseConfig = {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     HttpClient,
     DataProvider,
+
     SocialSharing,
     Connectivity,
     GoogleMaps,
