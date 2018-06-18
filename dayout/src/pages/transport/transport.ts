@@ -31,12 +31,15 @@ export class TransportPage {
   purpose: any;
   captureDataUrl: string;
   address: any; 
-
+  
   constructor(private modalCtrl:ModalController, private toastCtrl: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public alertCtrl: AlertController, public http: Http,) {
-    initializeApp(FIREBASE_CONFIG);
-    this.address = {
-      place: ''
-    };
+
+    if (!firebase.apps.length) {      
+      initializeApp(FIREBASE_CONFIG);
+    }
+
+    this.start = navParams.get('start');
+    this.destination = navParams.get('end');
   }
 
   takePicture(){
@@ -162,12 +165,20 @@ export class TransportPage {
     
            let modal = this.modalCtrl.create(LocationSelectPage);
     
-           modal.onDidDismiss((location) => {
-               console.log(location);
+          if(this.start_txt != undefined){
+           modal.onDidDismiss((startlocation) => {
+               console.log(startlocation);
            });
+          }
+
+          if(this.destination_txt != undefined){
+           modal.onDidDismiss((endlocation) => {
+               console.log(endlocation);
+           });
+          }
     
            modal.present();   
-    
+
        }
 
   }

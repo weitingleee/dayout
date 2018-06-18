@@ -8,14 +8,24 @@
         </ion-buttons>
     </ion-navbar>
  
+    <ion-label>From</ion-label>
     <ion-toolbar>
-        <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()"></ion-searchbar>
+        <ion-searchbar [(ngModel)]="query_start" (ionInput)="searchStartPlace()"></ion-searchbar>
     </ion-toolbar>
  
     <ion-list>
-        <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">{{place.description}}</ion-item>
+        <ion-item *ngFor="let place of places_start" (click)="selectStartPlace(place)">{{place.description}}</ion-item>
     </ion-list>
  
+    <ion-label>To</ion-label>
+    <ion-toolbar>
+        <ion-searchbar [(ngModel)]="query_end" (ionInput)="searchEndPlace()"></ion-searchbar>
+    </ion-toolbar>
+ 
+    <ion-list>
+        <ion-item *ngFor="let place of places_end" (click)="selectEndPlace(place)">{{place.description}}</ion-item>
+    </ion-list>
+
 </ion-header>
  
 <ion-content>

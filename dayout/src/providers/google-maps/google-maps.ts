@@ -52,7 +52,7 @@ export class GoogleMaps {
           script.id = "googleMaps";
  
           if(this.apiKey){
-            script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit&libraries=places';
+            script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit&libraries=places&fields=formatted_address,name&locationbias=circle:2000@1.352083,103.81983600000001';
           } else {
             script.src = 'http://maps.google.com/maps/api/js?callback=mapInit';      
           }
