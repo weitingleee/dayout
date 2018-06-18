@@ -23,3 +23,26 @@
 *{
     font-family:Lato;
 }
+
+ion-icon {
+    &[class*="dayout-"] {
+        // Instead of using the font-based icons
+        // We're applying SVG masks
+        mask-size: contain;
+        mask-position: 50% 50%;
+        mask-repeat: no-repeat;
+        background: currentColor;
+        width: 1em;
+        height: 1em;
+    }
+    // custom icons
+    &[class*="dayout-sms"] {
+        mask-image: url(../assets/icon/speech-bubble.svg);
+    }
+    &[class*="dayout-telegram"] {
+        mask-image: url(../assets/icon/telegram.svg);
+    }
+    &[class*="dayout-whatsapp"] {
+        mask-image: url(../assets/icon/whatsapp.svg);
+    }
+}

@@ -18,7 +18,7 @@ export class ApplyLeave {
   overseas: boolean = false;
   visibility: boolean = false;
   continue: boolean = true;
-
+  shareVia: any;
   text = {
     "number": "",
     "message": "",
@@ -28,6 +28,7 @@ export class ApplyLeave {
     this.modeFrom = 'Full';
     this.modeTo = 'Full';
     this.leaveType = 'Please select one';
+    this.shareVia = 'You may select to share this request via the green button below';
 
   }
   submitLeave() {
@@ -105,7 +106,7 @@ export class ApplyLeave {
             console.log(this.leaveType);
             this.uploadInformation("leave;\nJohn" + new Date().getTime() + "; " + this.fromDate + ";" + this.toDate + ";" + this.modeFrom + ";" + this.modeTo + ";" + this.leaveType + ";");
 
-            this.sendSMS(days);
+            this.share(days);
           })
         } else {
           if (this.modeFrom === 'Full') {
@@ -114,30 +115,34 @@ export class ApplyLeave {
             days = 0.5;
           }
           console.log('number of days: ' + days)
-          this.sendSMS(days);
+          this.share(days);
         }
 
     }
   }
 
-  sendSMS(days) {
-var message='Good day, your staff John has taken ' + days + ' days of ' + this.leaveType + ' leave from ' + this.fromDate + ' to ' + this.toDate + '.';
-    let search = new URLSearchParams();
-    //search.append('ID', '95240002');
-    search.append('Password', 'hello123');
-    search.append('Mobile', '6592223123');
-    search.append('Type', 'A');
-    search.append('Message', message);
-    
-    // Share via email
-    // Share via email
-    this.socialSharing.shareViaWhatsApp(message,null,null).then(() => {
-      // Success!
-    }).catch(() => {
-      // Error!
-    });
-    this.http.post('https://www.commzgate.net/gateway/SendMsg', search).subscribe(res => console.log(res.json.toString()));
+  share(days) {
+    var message = 'Good day, your staff John has taken ' + days + ' days of ' + this.leaveType + ' leave from ' + this.fromDate + ' to ' + this.toDate + '.';
 
+    if (this.shareVia === 'SMS') {
+      this.socialSharing.shareViaWhatsApp(message, null, null).then(() => {
+        // Success!
+      }).catch(() => {
+        // Error!
+      });
+    } else if (this.shareVia === 'Telegram') {
+      this.socialSharing.shareVia('telegram', message, null).then(() => {
+        // Success!
+      }).catch(() => {
+        // Error!
+      });
+    } else if (this.shareVia === 'What\'s App') {
+      this.socialSharing.shareViaWhatsApp(message, null).then(() => {
+        // Success!
+      }).catch(() => {
+        // Error!
+      });
+    }
   }
 
 
@@ -210,5 +215,37 @@ var message='Good day, your staff John has taken ' + days + ' days of ' + this.l
         toast.present();
       })
     })
+  }
+
+  closeShare() {
+    this.shareVia = 'Not needed';
+  }
+  shareViaSMS() {
+    this.socialSharing.canShareVia('sms', null, null).then(() => {
+      this.shareVia = 'SMS';
+    }).catch(() => {
+      this.showAlert('Alert', 'Are you sure you have SMS?');
+    });
+  }
+
+  shareViaTelegram() {
+
+    this.socialSharing.canShareVia('telegram', null, null).then(() => {
+      this.shareVia = 'Telegram';
+    }).catch(() => {
+      this.showAlert('Alert', 'Are you sure you have Telegram?');
+    });
+
+
+  }
+  shareViaWhatsapp() {
+
+    this.socialSharing.canShareVia('whatsapp', null, null).then(() => {
+      this.shareVia = 'What\'s App';
+    }).catch(() => {
+      this.showAlert('Alert', 'Are you sure you have What\'s App?');
+    });
+
+
   }
 }
